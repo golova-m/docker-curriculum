@@ -1,91 +1,103 @@
 <a id="top"></a>
 <img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/logo.png" alt="docker logo">
 
-*Learn to build and deploy your distributed applications easily to the cloud with Docker*
+*Научитесь легко создавать и разворачивать распределённые приложения в облаке с помощью Docker*
 
-Written and developed by [Prakhar Srivastav](http://prakhar.me).
+*По мотивам статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
 
 <a href="#top" class="top" id="getting-started">Top</a>
 
-## Getting Started: FAQs
+## Базовые термины: FAQ
 
-### What is Docker?
-Wikipedia defines [Docker](https://www.docker.com/) as
+### Что такое Docker?
+[Википедия](https://ru.wikipedia.org/wiki/Docker) даёт следующее определение [Docker](https://www.docker.com/):
 
-> an open-source project that automates the deployment of software applications inside **containers** by providing an additional layer of abstraction and automation of **OS-level virtualization** on Linux.
+> **программное обеспечение для автоматизации развёртывания и управления приложениями в среде виртуализации на уровне операционной системы. Позволяет «упаковать» приложение со всем его окружением и зависимостями в контейнер, который может быть перенесён на любую Linux-систему с поддержкой cgroups в ядре, а также предоставляет среду по управлению контейнерами.**
 
-Wow! That's a mouthful. In simpler words, Docker is a tool that allows developers, sys-admins etc. to easily deploy their applications in a sandbox (called *containers*) to run on the host operating system i.e. Linux. The key benefit of Docker is that it allows users to **package an application with all of its dependencies into a standardized unit** for software development. Unlike virtual machines, containers do not have the high overhead and hence enable more efficient usage of the underlying system and resources.
+Ого, какая тирада! Простыми словами - Docker это инструмент, который позволяет разработчикам, системными администраторам и другим специалистам разворачивать приложения в песочнице ( контейнерах) для запуска на целевой операционной системе. Ключевое преимущество Docker заключается в том, что он позволяет пользователям упаковать приложение со всеми его зависимостями в стандартизированный модуль. В отличие от виртуальных машин, контейнеры не создают больших накладных расходов, что позволяет использовать систему и ресурсы эффективнее.
+
+### Что такое контейнеры?
 
 
-### What are containers?
+В индустрии по текущим стандартам в качестве среды исполнения приложений используются виртуальные машины. Виртуальные машины эмулируют аппаратное обеспечение на котором выполняется гостевая операционная система с целевым приложением.
 
-The industry standard today is to use Virtual Machines (VMs) to run software applications. VMs run applications inside a guest Operating System, which runs on virtual hardware powered by the server’s host OS.
+Виртульные машины отлично подходят для изоляции приложеня - вариантов, когда проблема основной операцинной системы могла бы повлиять на выполнение приложения в гостевой ОС, не много. Но за такую изоляцию приходится платить большими накладными расходами на создание виртуальной среды. 
 
-VMs are great at providing full process isolation for applications: there are very few ways a problem in the host operating system can affect the software running in the guest operating system, and vice-versa. But this isolation comes at great cost — the computational overhead spent virtualizing hardware for a guest OS to use is substantial.
+Контейнеры используют другой подход. Вместо эмуляции аппаратного обеспечения Docker эмулирует операционную систему, делая контейнеры более легковесными.
 
-Containers take a different approach: by leveraging the low-level mechanics of the host operating system, containers provide most of the isolation of virtual machines at a fraction of the computing power.
+### Почему следует изучать контейнеры?
 
-### Why should I use it?
-
-Docker's rise has been nothing short of meteoric. Although containers by themselves are not a new technology, it was not until Docker arrived that they started to get mainstream attention. By providing standard APIs that made containers easy to use and creating a way for the community to collaborate around libraries of containers, Docker has radically changed the face of the technology landscape. In an article published by [The Register](http://www.theregister.co.uk/2014/05/23/google_containerization_two_billion/) in mid-2014, it was claimed that Google runs over **two billion containers per week**.
+Взлёт Docker был по-настоящему молниеносным. Несмотря на то, что контейнеры сами по себе не новая технология, до Docker они не были так распространены и популярны. Docker изменил ситуацию, предоставив стандартный API, который существенно упростил создание и использование контейнеров, и позволил сообществу вместе разрабатывать библиотеки по работе с контейнерами. В статье, опубликованной в [The Register](http://www.theregister.co.uk/2014/05/23/google_containerization_two_billion/) в середине 2014 говорится, что Google более **двух миллиардов контейнеров в неделю**.
 
 **Google Trends for 'Docker'**
-<img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/interest.png" title="interest">
 
-In addition to Docker's continual growth, Docker, Inc., the developer behind Docker has been valued at over a billion dollars! Due to its benefits of efficiency and portability, Docker has been gaining mind share rapidly, and is now leading the **Containerization** movement. As developers going out into the world, it is important that we understand this trend and see how we can benefit from it.
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/962_RC10/embed_loader.js">
 
-### What will this tutorial teach me?
-This tutorial aims to be the one-stop shop for getting your hands dirty with Docker. Apart from demystifying the Docker landscape, it'll give you hands-on experience with building and deploying your own webapps on the Cloud. We'll be using [Amazon Web Services](http://aws.amazon.com) to deploy a static website, and two dynamic webapps on [EC2](https://aws.amazon.com/ec2/) using [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) and [Elastic Container Service](https://aws.amazon.com/ecs/). Even if you have no prior experience with deployments, this tutorial should be all you need to get started.
+</script>
+<script type="text/javascript"> 
 
-## Using this Document
-This document contains a series of several sections, each of which explains a particular aspect of Docker. In each section, we will be typing commands (or writing code). All the code used in the tutorial is available in the [Github repo](http://github.com/prakhar1989/docker-curriculum).
+trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/0wkcjgj","geo":"","time":"today 5-y"}],"category":0,"property":""}, {"exploreQuery":"q=%2Fm%2F0wkcjgj","guestPath":"https://trends.google.ru:443/trends/embed/"});
+</script> 
+
+В дополнение к стабильному росту популярности, компания-разработчик Docker Inc. была оценена в два с лишним миллиарда долларов! Благодаря преимуществам в эффективности и портативности, Docker начал получать всё большую поддержку, и сейчас стоит во главе движения по контейнеризации (containerization). Как современные разработчики, мы должны понять этот тренд и выяснить, какую пользу мы можем из него извлечь.
+
+### Чему научит меня эта лабораторная?
+
+Задачей этой лабораторной является подробное знакомство с Docker. Кроме развеяния мифов о нём и его экосистеме, завершение лабораторной позволит получить небольшой опыт в сборке и развёртывании собственных веб-приложений в облаке. Мы будем использовать [Amazon Web Services](http://aws.amazon.com) для развёртывания статичного сайта. Два динамических веб-приложения мы развернём на [EC2](https://aws.amazon.com/ec2/) using [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) и [Elastic Container Service](https://aws.amazon.com/ecs/).
+
+## Комментарии к данному документу
+
+Данный документ состоит из нескольких разделов, каждый из которых посвящён определённому аспекту Docker. В каждом разделе мы будем вводить команды или писать код. Весь код доступен в [репозитории GitHub](http://github.com/prakhar1989/docker-curriculum).
 
 <a href="#top" class="top" id="table-of-contents">Top</a>
-## Table of Contents
+## Оглавление
 
--	[Preface](#preface)
-    -	[Prerequisites](#prerequisites)
-       -[Setting up your computer](#setup)
-       -[1.0 Playing with Busybox](#busybox)
+-	[Предисловие](#preface)
+    -	[Предварительные требования](#prerequisites)
+    -   [Настройка компьютера](#setup)
+-   [1 Играем с Busybox](#busybox)
     -	[1.1 Docker Run](#dockerrun)
-    -	[1.2 Terminology](#terminology)
-       -[2.0 Webapps with Docker](#webapps)
-    -	[2.1 Static Sites](#static-site)
-    -	[2.2 Docker Images](#docker-images)
-    -	[2.3 Our First Image](#our-image)
+    -	[1.2 Терминология](#terminology)
+-   [2 Веб-приложения с Docker](#webapps)
+    -	[2.1 Статические сайты](#static-site)
+    -	[2.2 Docker образы (image)](#docker-images)
+    -	[2.3 Наш первый образ](#our-image)
     -	[2.4 Dockerfile](#dockerfiles)
-    -	[2.5 Docker on AWS](#docker-aws)
-       -[3.0 Multi-container Environments](#multi-container)
+    -	[2.5 Docker на AWS](#docker-aws)
+-   [3 Многоконтейнерные окружения](#multi-container)
     -	[3.1 SF Food Trucks](#foodtrucks)
-    -	[3.2 Docker Network](#docker-network)
+    -	[3.2 Docker сеть](#docker-network)
     -	[3.3 Docker Compose](#docker-compose)
     -	[3.4 AWS Elastic Container Service](#aws-ecs)
-       -[4.0 Wrap Up](#wrap-up)
-    -	[4.1 What Next?](#next-steps)
-    -	[4.2 Give Feedback](#feedback)
-       -[References](#references)
+-   [4 Подводим итоги](#wrap-up)
+    -	[4.1 Что дальше?](#next-steps)
+    -	[4.2 Обратная связь](#feedback)
+-   [Ссылки](#references)
 
 
 ------------------------------
 <a href="#table-of-contents" class="top" id="preface">Top</a>
-## Preface
+## Предисловие
 
-> Note: This tutorial uses version **1.12.0-rc2** of Docker. If you find any part of the tutorial incompatible with a future version, please raise an [issue](https://github.com/prakhar1989/docker-curriculum/issues). Thanks!
+> Внимание: Данная лабораторная предполагает использование Docker версии  **1.12.0-rc2**. Если какая-либо часть будет несовместима с более новыми версиями, откройте [issue](https://github.com/prakhar1989/docker-curriculum/issues). Спасибо!
 
 <a id="prerequisites"></a>
-### Prerequisites
-There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor. Prior experience in developing web applications will be helpful but is not required. As we proceed further along the tutorial, we'll make use of a few cloud services. If you're interested in following along, please create an account on each of these websites:
+### Предварительные требования
 
-- [Amazon Web Services](http://aws.amazon.com/)
-- [Docker Hub](https://hub.docker.com/)
+Для прохождения данной лабораторной не потребуется специальной подготовки, кроме уверенного использования командной строки и текстового редактора. Прошлый опыт разработки веб-приложений не требуется, но будет полезен. По мере прохождения обучения мы будем использовать облачные сервисы. Вам понадобится создать аккаунт на следующих сайтах:
+
+- [Amazon Web Services](http://aws.amazon.com/),
+- [Docker Hub](https://hub.docker.com/).
 
 <a id="setup"></a>
-### Setting up your computer
-Getting all the tooling setup on your computer can be a daunting task, but thankfully as Docker has become stable, getting Docker up and running on your favorite OS has become very easy. 
+### Настраиваем компьютер
 
-Until a few releases ago, running Docker on OSX and Windows was quite a hassle. Lately however, Docker has invested significantly into improving the on-boarding experience for its users on these OSes, thus running Docker now is a cakewalk. The *getting started* guide on Docker has detailed instructions for setting up Docker on [Mac](https://www.docker.com/products/docker#/mac), [Linux](https://www.docker.com/products/docker#/linux) and [Windows](https://www.docker.com/products/docker#/windows).
+Установка и настройка всех необходимых инструментов может быть утомительной задачей, но, к счастью, Docker стал довольно стабильным, и установка и запуск его на любой ОС стала простым. Итак, установим Docker.
 
-Once you are done installing Docker, test your Docker installation by running the following:
+Еще несколько релизов назад запуск Докера на OS X и Windows был проблемным. Но команда разработчиков проделала огромную работу, и сегодня весь процесс — проще некуда. На официальном сайте вы можете найти подробные инструкции по установке на [Mac](https://www.docker.com/products/docker#/mac), [Linux](https://www.docker.com/products/docker#/linux) and [Windows](https://www.docker.com/products/docker#/windows).
+
+Проверим, все ли установлено корректно:
+
 ```
 $ docker run hello-world
 
@@ -97,17 +109,19 @@ ___________
 
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 <a id="busybox"></a>
-## 1.0 Playing with Busybox
-Now that we have everything setup, it's time to get our hands dirty. In this section, we are going to run a [Busybox](https://en.wikipedia.org/wiki/BusyBox) container on our system and get a taste of the `docker run` command.
+## 1 Играем с BusyBox
 
-To get started, let's run the following in our terminal:
+Теперь, когда всё подготовлено, пора приняться за дело. В этом разделе нашей целью будет запуск контейнера [Busybox](https://en.wikipedia.org/wiki/BusyBox) и освоение команды `docker run`.
+
+Для начала, запустите следующую команду:
 ```
 $ docker pull busybox
 ```
 
-> Note: Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. If you're on a Mac, make sure the Docker engine is running. If you're on Linux, then prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/linux-postinstall/) to get rid of this issue.
+> Внимание: В зависимости от того, как вы установили Docker в систему, вы можете увидеть сообщение `permission denied` (доступ запрещён) в ответ на вызов выше приведённой команды. Если вы на Mac, убедитесь, что Docker движок запущен. Если на Линукс, вам может потребоваться повысить права доступа с помощью команды `sudo`. В качестве альтернативного варианта вы можете создать [Docker группу](https://docs.docker.com/engine/installation/linux/linux-postinstall/) для решения этой проблемы.
 
-The `pull` command fetches the busybox [**image**](https://hub.docker.com/_/busybox/) from the [**Docker registry**](https://hub.docker.com/explore/) and saves it to our system. You can use the `docker images` command to see a list of all images on your system.
+Команда `pull` скачивает [образ busybox](https://hub.docker.com/_/busybox/) из [**Docker registry**](https://hub.docker.com/explore/) и сохраняет его в систему. Вы можете использовать команду `docker images` для вывода в консоль списка образов находящихся в вашей системе.
+
 ```
 $ docker images
 REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
@@ -115,35 +129,44 @@ busybox                 latest              c51f86c28340        4 weeks ago     
 ```
 
 <a id="dockerrun"></a>
-### 1.1 Docker Run
-Great! Let's now run a Docker **container** based on this image. To do that we are going to use the almighty `docker run` command.
+### 1.1 Запуск Docker
+
+Великолепно! Теперь перейдём к запуску **контейнера** на основе этого образа. Для этого мы воспользуемся всемогущей командой `docker run`.
 
 ```
 $ docker run busybox
 $
 ```
-Wait, nothing happened! Is that a bug? Well, no. Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (busybox in this case), loads up the container and then runs a command in that container. When we run `docker run busybox`, we didn't provide a command, so the container booted up, ran an empty command and then exited. Well, yeah - kind of a bummer. Let's try something more exciting.
+
+Постойте, но ничего не произошло! Это баг? Ну, нет. Под капотом произошло много всего. Когда вы запустили команду `run`, клиент Docker нашёл образ (в нашем случае, busybox), загрузил контейнер и запустил команду внутри этого контейнера. Мы выполнили `docker run busybox`, но не указали никаких аргументов, так что контейнер загрузился, выполнил команду `sh` и процесс контейнер завершился. Ну, да, как-то обидно. Попробуем сделать что-нибудь поинтереснее.
 
 ```
 $ docker run busybox echo "hello from busybox"
 hello from busybox
 ```
-Nice - finally we see some output. In this case, the Docker client dutifully ran the `echo` command in our busybox container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast! Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
+
+Ура, наконец-то какой-то вывод. В данном случае Docker клиент добросовестно запустил команду `echo` внутри контейнера, а затем вышел из него. Вы, наверное, заметили, что всё произошло очень быстро. А теперь представьте себе процесс загрузки виртуальной машины, выполнения в ней команды и её выключения. Теперь ясно, почему говорят, что контейнеры быстрые! Чтобы узнать время выполнения попробуйте запустить последнюю команду со словом `time` в начале.
+
+Теперь давайте взглянем на команду `docker ps`. Она выводит на жкран список всех запущенных контейнеров.
 
 ```
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
-Since no containers are running, we see a blank line. Let's try a more useful variant: `docker ps -a`
+
+В силу того, что ни один контейнер не запушен, выводится пустая строка. Попробуем более информативный вариант `docker ps -a`:
+
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
 305297d7a235        busybox             "uptime"            11 minutes ago      Exited (0) 11 minutes ago                       distracted_goldstine
 ff0a5c3750b9        busybox             "sh"                12 minutes ago      Exited (0) 12 minutes ago                       elated_ramanujan
 ```
-So what we see above is a list of all containers that we ran. Do notice that the `STATUS` column shows that these containers exited a few minutes ago.
 
-You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
+То, что мы видим в выдаче - список всех контейнеров, которые были запущены ранее. Обратите внимание, что колонка `STATUS` показывает, что эти контейнеры остановились несколько минут назад. 
+
+Наверное вы удивляетесь, существует ли способ запустить более одной команды в контейнере. Давайте попробуем:
+
 ```
 $ docker run -it busybox sh
 / # ls
@@ -151,63 +174,74 @@ bin   dev   etc   home  proc  root  sys   tmp   usr   var
 / # uptime
  05:45:21 up  5:58,  0 users,  load average: 0.00, 0.01, 0.04
 ```
-Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now we can run as many commands in the container as we want. Take some time to run your favorite commands.
 
-> **Danger Zone**: If you're feeling particularly adventurous you can try `rm -rf bin` in the container. Make sure you run this command in the container and **not** in your laptop. Doing this will not make any other commands like `ls`, `echo` work. Once everything stops working, you can exit the container (type `exit` and press Enter) and then start it up again with the `docker run -it busybox sh` command. Since Docker creates a new container every time, everything should start working again.
+Выполнение команды `run` с флагами `-it` подключает нас к интерактивному терминалу tty в контейнере. Теперь мы можем запустить столько команд, сколько захотим. Уделите немного времени запуску ваших любимых команд в этой консоли.
 
-That concludes a whirlwind tour of the mighty `docker run` command, which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As we proceed further, we'll see a few more variants of `docker run`.
+> **Опасная зона**: Если вы любите рисковать, вы можете попробовать выполнить команду `rm -rf bin`. Убедитесь, что выполняете команду в контейнере, а **не** в основной операционной системе. Удалив данной командой папку bin не даст возможности запускать команды как `ls`, `echo`. После того, как всё перестанет работать, вы можете выйти из контейнера (выполним команду `exit`), а затем запустить контейнер заново `docker run -it busybox sh`. Так как Docker каждый раз создаёт новый контейнер, папка bin и команды должны быть опять доступны.
 
-Before we move ahead though, let's quickly talk about deleting containers. We saw above that we can still see remnants of the container even after we've exited by running `docker ps -a`. Throughout this tutorial, you'll run `docker run` multiple times and leaving stray containers will eat up disk space. Hence, as a rule of thumb, I clean up containers once I'm done with them. To do that, you can run the `docker rm` command. Just copy the container IDs from above and paste them alongside the command.
+> В Docker 1.3 запуск контейнера и создание слоя файловой системы разделены. Если вы используете эту версию, вы можете проделать аналогичный выше пример, но с командами `create`, `start`, `stop`. Запуск команды `docker create -it busybox sh` создаст слой файловой системы контейнера. Затем командами `docker start -ia <id_контейнера>` и `docker stop <id_контейнера>` вы можете запустить и остановить выполнение контейнера не уничтожая файловый слой. Проанализируйте, что будет в этом случае при повторном запуске. 
 
+На этом захватывающий тур по возможностям команды docker run закончен. Скорее всего, вы будете использовать эту команду довольно часто. Так что важно, чтобы мы поняли как с ней обращаться. Чтобы узнать больше о run, используйте `docker run --help`, и увидите полный список поддерживаемых флагов. Скоро мы увидим еще несколько способов использования `docker run`.
+
+Перед тем, как продолжать, давайте вкратце рассмотрим удаление контейнеров. Мы видели выше, что с помощью команды `docker ps -a` все еще можно увидеть остатки завершенных контейнеров. На протяжении этого пособия, вы будете запускать `docker run` несколько раз, и оставшиеся, бездомные контейнеры будут съедать дисковое пространство. Так что я взял за правило удалять контейнеры после завершения работы с ними. Для этого используется команда docker rm. Просто скопируйте ID (можно несколько) из вывода выше и передайте параметрами в команду.
 ```
 $ docker rm 305297d7a235 ff0a5c3750b9
 305297d7a235
 ff0a5c3750b9
 ```
 
-On deletion, you should see the IDs echoed back to you. If you have a bunch of containers to delete in one go, copy-pasting IDs can be tedious. In that case, you can simply run -
+При удалении идентификаторы будут снова выведены на экран. Если нужно удалить много контейнеров, то вместо ручного копирования и вставления можно сделать так:
 
 ```
 $ docker rm $(docker ps -a -q -f status=exited)
 ```
-This command deletes all containers that have a status of `exited`. In case you're wondering, the `-q` flag, only returns the numeric IDs and `-f` filters output based on conditions provided. One last thing that'll be useful is the `--rm` flag that can be passed to `docker run` which automatically deletes the container once it's exited from. For one off docker runs, `--rm` flag is very useful.
 
-Lastly, you can also delete images that you no longer need by running `docker rmi`.
+Эта команда удаляет все контейнеры, у которых статус `exited`. Флаг `-q` возвращает только численные ID, а флаг `-f` фильтрует вывод на основе предоставленных условий. Последняя полезная деталь — команде `docker run` можно передать флаг `--rm`, тогда контейнер будет автоматически удаляться при завершении. Это очень полезно для разовых запусков и экспериментов с Docker.
+
+Также можно удалять ненужные образы командой `docker rmi`.
 
 <a id="terminology"></a>
-### 1.2 Terminology
-In the last section, we used a lot of Docker-specific jargon which might be confusing to some. So before we go further, let me clarify some terminology that is used frequently in the Docker ecosystem.
 
-- *Images* - The blueprints of our application which form the basis of containers. In the demo above, we used the `docker pull` command to download the **busybox** image.
-- *Containers* - Created from Docker images and run the actual application. We create a container using `docker run` which we did using the busybox image that we downloaded. A list of running containers can be seen using the `docker ps` command.
-- *Docker Daemon* - The background service running on the host that manages building, running and distributing Docker containers. The daemon is the process that runs in the operation system to which clients talk to.
-- *Docker Client* - The command line tool that allows the user to interact with the daemon. More generally, there can be other forms of clients too - such as [Kitematic](https://kitematic.com/) which provide a GUI to the users.
-- *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. If required, one can host their own Docker registries and can use them for pulling images.
+### 1.2 Терминология
+
+В предыдущем разделе мы использовали много специфичного для Докера жаргона, и многих это может запутать. Перед тем, как продолжать, давайте разберем некоторые термины, которые часто используются в экосистеме Докера.
+
+- *Images* (образы) - Схемы нашего приложения, которые являются основой контейнеров. В примере выше мы использовали команду `docker pull` чтобы скачать образ **busybox**.
+- *Containers* (контейнеры) - Создаются на основе образа и запускают само приложение. Мы создали контейнер командой `docker run`, и использовали образ busybox, скачанный ранее. Список запущенных контейнеров можно увидеть с помощью команды docker ps.
+- *Docker Daemon* (Docker демон) - Фоновый сервис, запущенный на хост-машине, который отвечает за создание, запуск и уничтожение Докер-контейнеров. Демон — это процесс, который запущен на операционной системе, с которой взаимодействует клиент.
+- *Docker Client* (Docker клиент) - Утилита командной строки, которая позволяет пользователю взаимодействовать с демоном. Существуют другие формы клиента, например, [Kitematic](https://kitematic.com/), с графическим интерфейсом.
+- *Docker Hub* - [Реестр Docker-образов](https://hub.docker.com/explore/). Грубо говоря, архив всех доступных образов. Если нужно, то можно содержать собственный реестр и использовать его для получения образов.
+
 
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 <a id="webapps"></a>
-## 2.0 Webapps with Docker
-Great! So we have now looked at `docker run`, played with a Docker container and also got a hang of some terminology. Armed with all this knowledge, we are now ready to get to the real-stuff, i.e. deploying web applications with Docker!
+
+## 2 Веб-приложения в Docker
+
+Супер! Теперь мы научились работать с `docker run`, поиграли с несколькими контейнерами и разобрались в терминологии. Вооруженные этими знаниями, мы готовы переходить к реальным штукам: деплою веб-приложений с Docker!
 
 <a id="static-site"></a>
-### 2.1 Static Sites
-Let's start by taking baby-steps. The first thing we're going to look at is how we can run a dead-simple static website. We're going to pull a Docker image from Docker Hub, run the container and see how easy it is to run a webserver.
 
-Let's begin. The image that we are going to use is a single-page [website](http://github.com/prakhar1989/docker-curriculum) that I've already created for the purpose of this demo and hosted on the [registry](https://hub.docker.com/r/prakhar1989/static-site/) - `prakhar1989/static-site`. We can download and run the image directly in one go using `docker run`.
+### 2.1 Статичные сайты
+
+Давайте начнем с малого. Вначале рассмотрим самый простой статический веб-сайт. Скачаем образ из Docker Hub, запустим контейнер и посмотрим, насколько легко будет запустить веб-сервер.
+
+Поехали. Для одностраничного сайта нам понадобится образ, который я заранее создал для этого пособия и разместил в [реестре](https://hub.docker.com/r/prakhar1989/static-site/) - prakhar1989/static-site. Можно скачать образ напрямую командой `docker run`.
 
 ```
 $ docker run prakhar1989/static-site
 ```
-Since the image doesn't exist locally, the client will first fetch the image from the registry and then run the image. If all goes well, you should see a `Nginx is running...` message in your terminal. Okay now that the server is running, how do see the website? What port is it running on? And more importantly, how do we access the container directly from our host machine?
+Так как образа не существует локально, клиент сначала скачает образ из реестра, а потом запустит его. Если всё без проблем, то вы увидите сообщение Nginx is running... в терминале. Теперь сервер запущен. Как увидеть сайт в действии? На каком порту работает сервер? И, что самое важное, как напрямую достучаться до контейнера из хост-контейнера?
 
-Well in this case, the client is not exposing any ports so we need to re-run the `docker run` command to publish ports. While we're at it, we should also find a way so that our terminal is not attached to the running container. This way, you can happily close your terminal and keep the container running. This is called **detached** mode.
+В нашем случае клиент не открывает никакие порты, так что нужно будет перезапустить команду  `docker run` чтобы сделать порты публичными. Заодно давайте сделаем так, чтобы терминал не был прикреплен к запущенному контейнеру. В таком случае можно будет спокойно закрыть терминал, а контейнер продолжит работу. Этот режим называется **detached**.
 
 ```
 $ docker run -d -P --name static-site prakhar1989/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will detach our terminal, `-P` will publish all exposed ports to random ports and finally `--name` corresponds to a name we want to give. Now we can see the ports by running the `docker port [CONTAINER]` command
+Флаг `-d` открепит (detach) терминал, флаг `-P` сделает все открытые порты публичными и случайными, и, наконец, флаг `--name` это имя, которое мы хотим дать контейнеру. Теперь можно увидеть порты с помощью команды `docker port [CONTAINER]`.
+
 
 ```
 $ docker port static-site
@@ -215,29 +249,31 @@ $ docker port static-site
 443/tcp -> 0.0.0.0:32768
 ```
 
-You can open [http://localhost:32769](http://localhost:32769) in your browser. 
+Вы можете открыть [http://localhost:32769](http://localhost:32769) в своём браузере. 
 
-> Note: If you're using docker-toolbox, then you might need to use `docker-machine ip default` to get the IP. 
+> Замечание. Если вы используете docker-toolbox, тогда вам потребуется узнать ip адрес машины, например, с помощью команды `docker-machine ip default`. В основной операционной системе также можно выполнить команду `ip addr`.
 
-You can also specify a custom port to which the client will forward connections to the container. 
+Вы также можете назначить свой порт, на который Docker клиент будет перенаправлять запросы на соединение к контейнеру.
 
 ```
 $ docker run -p 8888:80 prakhar1989/static-site
 Nginx is running...
 ```
+Слева порт основной операционной системы, справа порт контейнера.
+
 <img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/static.png" title="static">
 
-To stop a detached container, run `docker stop` by giving the container ID. 
+Чтобы остановить контейнер запустите docker stop и укажите идентификатор (ID) контейнера.
 
-I'm sure you agree that was super simple. To deploy this on a real server you would just need to install Docker, and run the above Docker command. Now that you've seen how to run a webserver inside a Docker image, you must be wondering - how do I create my own Docker image? This is the question we'll be exploring in the next section.
+Согласитесь, все было очень просто. Чтобы развернуть это на реальный сервер, нужно просто установить Docker и запустить команду выше. Теперь, когда вы увидели, как запускать веб-сервер внутри образа, вам, наверное, интересно — а как создать свой Docker образ? Мы будем изучать эту тему в следующем разделе.
 
 
 <a id="docker-images"></a>
-### 2.2 Docker Images
+### 2.2 Docker образы
 
-We've looked at images before, but in this section we'll dive deeper into what Docker images are and build our own image! Lastly, we'll also use that image to run our application locally and finally deploy on [AWS](http://aws.amazon.com) to share it with our friends! Excited? Great! Let's get started.
+Мы касались образов ранее, но в этом разделе мы заглянем глубже: что такое Docker образы и как создавать собственные образы. Наконец, мы используем собственный образ чтобы запустить приложение локально, а потом развернём его на [AWS](http://aws.amazon.com), чтобы показать друзьям. Круто? Круто! Давайте начнем.
 
-Docker images are the basis of containers. In the previous example, we **pulled** the *Busybox* image from the registry and asked the Docker client to run a container **based** on that image. To see the list of images that are available locally, use the `docker images` command.
+Образы это основы для контейнеров. В прошлом примере мы скачали (**pull**) образ под названием Busybox из регистра, и попросили клиент Docker запустить контейнер, **основанный** на этом образе. Чтобы увидеть список доступных локально образов, используйте команду docker images.
 
 ```
 $ docker images
@@ -251,61 +287,58 @@ busybox                         latest              c51f86c28340        9 weeks 
 hello-world                     latest              0a6ba66e537a        11 weeks ago        960 B
 ```
 
-The above gives a list of images that I've pulled from the registry, along with ones that I've created myself (we'll shortly see how). The `TAG` refers to a particular snapshot of the image and the `IMAGE ID` is the corresponding unique identifier for that image.
+Это список образов, которые я скачал из регистра, а также тех, что я сделал сам (скоро увидим, как это делать). `TAG` — это конкретный снимок или снэпшот (snapshot) образа, а `IMAGE ID` — это соответствующий уникальный идентификатор образа.
 
-For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. If you don't provide a specific version number, the client defaults to `latest`. For example, you can pull a specific version of `ubuntu` image
+Для простоты, можно относиться к образу как к git-репозиторию. Образы можно [коммитить](https://docs.docker.com/engine/reference/commandline/commit/) с изменениями, и можно иметь несколько версий. Если не указывать конкретную версию, то клиент по умолчанию использует `latest`. Например, можно скачать определенную версию образа `ubuntu`:
 ```
 $ docker pull ubuntu:12.04
 ```
+Чтобы получить новый Docker образ, можно скачать его из реестра (такого, как Docker Hub) или создать собственный. На Docker Hub есть десятки тысяч образов. Можно искать напрямую из командной строки с помощью `docker search`.
 
-To get a new Docker image you can either get it from a registry (such as the Docker Hub) or create your own. There are tens of thousands of images available on [Docker Hub](https://hub.docker.com/explore/). You can also search for images directly from the command line using `docker search`.
+Важно понимать разницу между базовыми и дочерними образами:
 
-An important distinction to be aware of when it comes to images is the difference between base and child images.
+- **Base images** (базовые образы) — это образы, которые не имеют родительского образа. Обычно это образы с операционной системой, такие как ubuntu, busybox или debian.
+- **Child images** (дочерние образы) — это образы, построенные на базовых образах и обладающие дополнительной функциональностью.
 
-- **Base images** are images that have no parent image, usually images with an OS like ubuntu, busybox or debian.
+Существуют официальные и пользовательские образы, и любые из них могут быть базовыми и дочерними.
 
-- **Child images** are images that build on base images and add additional functionality.
-
-Then there are official and user images, which can be both base and child images.
-
-- **Official images** are images that are officially maintained and supported by the folks at Docker. These are typically one word long. In the list of images above, the `python`, `ubuntu`, `busybox` and `hello-world` images are base images.
-
-- **User images** are images created and shared by users like you and me. They build on base images and add additional functionality. Typically, these are formatted as `user/image-name`.
+- **Официальные образы** — это образы, которые официально поддерживаются командой Docker. Обычно в их названии одно слово. В списке выше python, ubuntu, busybox и hello-world — базовые образы.
+- **Пользовательские образы** — образы, созданные простыми пользователями вроде меня и вас. Они построены на базовых образах. Обычно, они называются по формату user/image-name.
 
 <a id="our-image"></a>
-### 2.3 Our First Image
+### 2.3 Наш первый образ
 
-Now that we have a better understanding of images, it's time to create our own. Our goal in this section will be to create an image that sandboxes a simple [Flask](http://flask.pocoo.org) application. For the purposes of this workshop, I've already created a fun little [Flask app](https://github.com/prakhar1989/docker-curriculum/tree/master/flask-app) that displays a random cat `.gif` every time it is loaded - because you know, who doesn't like cats? If you haven't already, please go ahead and clone the repository locally.
+Теперь, когда мы лучше понимаем, что такое образы и какие они бывают, самое время создать собственный образ. Цель этого раздела — создать образ с простым приложением на [Flask](http://flask.pocoo.org). Для этого пособия я сделал [маленькое приложение](https://github.com/prakhar1989/docker-curriculum/tree/master/flask-app), которое выводит случайную гифку с кошкой. Ну, потому что, кто не любит кошек? Склонируйте этот репозиторий к себе на локальную машину.
 
-The next step now is to create an image with this web app. As mentioned above, all user images are based off of a base image. Since our application is written in Python, the base image we're going to use will be [Python 3](https://hub.docker.com/_/python/). More specifically, we are going to use the `python:3-onbuild` version of the python image.
+Следующим шагом является создание образа с данным веб-приложением. Как говорилось выше, все пользовательские образы базируются на базовых образах. Так как приложение написано на Python, базовый образ следует выбрать с предустановленным [Python 3](https://hub.docker.com/_/python/). Точнее мы собираемся использовать `python:3-onbuild` версию python образа.
 
-What's the `onbuild` version you might ask?
+Что ещё за `onbuild` версия вы можете спросить?
 
-> These images include multiple ONBUILD triggers, which should be all you need to bootstrap most applications. The build will COPY a `requirements.txt` file, RUN `pip install` on said file, and then copy the current directory into `/usr/src/app`.
+> Данные образы включают множество onbuild триггеров, которых должно хватить для запуска большинства приложений. При построении скопируется `requirements.txt` файл, запустится `pip install` на основе этого файла и затем скопируется текущая директория в `/usr/src/app`.
 
-In other words, the `onbuild` version of the image includes helpers that automate the boring parts of getting an app running. Rather than doing these tasks manually (or scripting these tasks), these images do that work for you. We now have all the ingredients to create our own image - a functioning web app and a base image. How are we going to do that? The answer is - using a **Dockerfile**.
+Другими словами `onbuild` версия образа содержит скрипты-помошники для автоматизации рутинных задач необходимых для запуска приложения. Вместо выполнения этих задач вручную (или написания для этого скриптов), эти образы делают эту работу за вас. Теперь у нас есть все ингредиенты для создания собственных образов - работающее веб-приложение и базовый образ. Как мы будем подходить к этой задаче? Ответ - **Dockerfile**.
 
 <a id="dockerfiles"></a>
 ### 2.4 Dockerfile
 
-A [Dockerfile](https://docs.docker.com/engine/reference/builder/) is a simple text-file that contains a list of commands that the Docker client calls while creating an image. It's a simple way to automate the image creation process. The best part is that the [commands](https://docs.docker.com/engine/reference/builder/#from) you write in a Dockerfile are *almost* identical to their equivalent Linux commands. This means you don't really have to learn new syntax to create your own dockerfiles.
+[Dockerfile](https://docs.docker.com/engine/reference/builder/) — это простой текстовый файл, в котором содержится список команд Докер-клиента. Это простой способ автоматизировать процесс создания образа. Самое классное, что [команды](https://docs.docker.com/engine/reference/builder/#from) в Dockerfile почти идентичны своим аналогам в Linux. Это значит, что в принципе не нужно изучать никакой новый синтаксис, чтобы начать работать с докерфайлами.
 
-The application directory does contain a Dockerfile but since we're doing this for the first time, we'll create one from scratch. To start, create a new blank file in our favorite text-editor and save it in the **same** folder as the flask app by the name of `Dockerfile`.
+В директории с приложением есть Dockerfile, но так как мы делаем все впервые, нам нужно создать его с нуля. Создайте новый пустой файл в любимом текстовом редакторе, и сохраните его в **той же** директории, где находится flask-приложение. Назовите файл `Dockerfile`.
 
-We start with specifying our base image. Use the `FROM` keyword to do that -
+Для начала укажем базовый образ. Для этого нужно использовать ключевое слово `FROM`.
 ```
 FROM python:3-onbuild
 ```
-The next step usually is to write the commands of copying the files and installing the dependencies. Luckily for us, the `onbuild` version of the image takes care of that. The next thing we need to the specify is the port number that needs to be exposed. Since our flask app is running on port `5000`, that's what we'll indicate.
+Следующим шагом обычно указывают команды для копирования файлов и установки зависимостей. Но к счастью, `onbuild`-версия базового образа берет эти задачи на себя. Дальше нам нужно указать порт, который следует открыть. Наше приложение работает на порту `5000`, поэтому укажем его:
 ```
 EXPOSE 5000
 ```
-The last step is to write the command for running the application, which is simply - `python ./app.py`. We use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that -
+Последний шаг — указать команду для запуска приложения. Это просто `python ./app.py`. Для этого используем команду [CMD](https://docs.docker.com/engine/reference/builder/#cmd):
 ```
 CMD ["python", "./app.py"]
 ```
 
-The primary purpose of `CMD` is to tell the container which command it should run when it is started. With that, our `Dockerfile` is now ready. This is how it looks like -
+Главное предназначение `CMD` — это сообщить контейнеру какие команды нужно выполнить при старте. Теперь наш `Dockerfile` готов. Вот как он выглядит:
 ```
 # our base image
 FROM python:3-onbuild
@@ -317,10 +350,9 @@ EXPOSE 5000
 CMD ["python", "./app.py"]
 ```
 
-Now that we have our `Dockerfile`, we can build our image. The `docker build` command does the heavy-lifting of creating a Docker image from a `Dockerfile`.
+Теперь можно создать образ. Команда `docker build` занимается сложной задачей создания образа на основе `Dockerfile`.
 
-The section below shows you the output of running the same. Before you run the command yourself (don't forget the period), make sure to replace my username with yours. This username should be the same one you created when you registered on [Docker hub](https://hub.docker.com). If you haven't done that yet, please go ahead and create an account. The `docker build` command is quite simple - it takes an optional tag name with `-t` and a location of the directory containing the `Dockerfile`.
-
+Листинг ниже демонстрирует процесс. Перед тем, как запустите команду сами (не забудьте точку в конце), проверьте, чтобы там был ваш username вместо моего. Username должен соответствовать тому, что использовался при регистрации на [Docker hub](https://hub.docker.com). Если вы еще не регистрировались, то сделайте это до выполнения команды. Команда `docker build` довольно проста: она принимает опциональный тег с флагом `-t имя_пользователя/имя_образа` и путь до директории, в которой лежит `Dockerfile`.
 ```
 $ docker build -t prakhar1989/catnip .
 Sending build context to Docker daemon 8.704 kB
@@ -344,30 +376,34 @@ Removing intermediate container f01401a5ace9
 Successfully built 13e87ed1fbc2
 ```
 
-If you don't have the `python:3-onbuild` image, the client will first pull the image and then create your image. Hence, your output from running the command will look different from mine. Look carefully and you'll notice that the on-build triggers were executed correctly. If everything went well, your image should be ready! Run `docker images` and see if your image shows.
+Если у вас нет образа `python:3-onbuild`, то клиент сначала скачает его, а потом возьмется за создание вашего образа. Так что, вывод на экран может отличаться от моего. Посмотрите внимательно, и найдете триггеры onbuild. Если все прошло хорошо, то образ готов! Запустите `docker images` и увидите свой образ в списке.
 
-The last step in this section is to run the image and see if it actually works (replacing my username with yours).
+Последний шаг — запустить образ и проверить его работоспособность (замените username на свой):
 ```
 $ docker run -p 8888:5000 prakhar1989/catnip
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-```
-The command we just ran used port 5000 for the server inside the container, and exposed this externally on port 8888. Head over to the URL with port 8888, where your app should be live.
+ ```
+
+Зайдите на указанный URL и увидите приложение в работе.
 
 <img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/catgif.png" title="static">
 
-Congratulations! You have successfully created your first docker image.
+Поздравляю! Вы успешно создали свой первый образ Докера!
 
 <a id="docker-aws"></a>
 ### 2.5 Docker on AWS
 
-What good is an application that can't be shared with friends, right? So in this section we are going to see how we can deploy our awesome application to the cloud so that we can share it with our friends! We're going to use AWS [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) to get our application up and running in a few clicks. We'll also see how easy it is to make our application scalable and manageable with Beanstalk!
+Что хорошего в приложении, которое нельзя показать друзьям, правда? Так что в этом разделе мы научимся разворачивать наше офигенное приложение в облако. Будем использовать AWS [Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), чтобы решить эту задачу за пару кликов. Мы увидим, как с помощью Beanstalk легко управлять и масштабировать наше приложение.
+
 
 ##### Docker push
-The first thing that we need to do before we deploy our app to AWS is to publish our image on a registry which can be accessed by AWS. There are many different [Docker registries](https://aws.amazon.com/ecr/) you can use (you can even host [your own](https://docs.docker.com/registry/deploying/)). For now, let's use [Docker Hub](https://hub.docker.com) to publish the image. To publish, just type
+
+Первое, что нужно сделать перед развёртыванием на AWS это опубликовать наш образ в реестре, для того, чтобы можно было скачивать его из AWS. Есть несколько [Docker реестров](https://aws.amazon.com/ecr/) (или можно создать собственный). Для начала, давайте используем [Docker Hub](https://hub.docker.com). Для публикации образа просто выполните:
+
 ```
 $ docker push prakhar1989/catnip
 ```
-If this is the first time you are pushing an image, the client will ask you to login. Provide the same credentials that you used for logging into Docker Hub.
+Если это ваша первая публикация, то клиент попросит вас залогиниться. Введите те же данные, что используете для входа в [Docker Hub](https://hub.docker.com).
 
 ```
 $ docker login
@@ -375,47 +411,50 @@ Username: prakhar1989
 WARNING: login credentials saved in /Users/prakhar/.docker/config.json
 Login Succeeded
 ```
+Не забудьте заменить название образа на свое. Очень важно сохранить формат username/image_name, чтобы клиент понимал, куда публиковать образ.
 
-Remember to replace the name of the image tag above with yours. It is important to have the format of `username/image_name` so that the client knows where to publish.
+После этого можете посмотреть на свой образ на Docker Hub. Например, вот [страница](https://hub.docker.com/r/prakhar1989/catnip/) моего образа.
 
-Once that is done, you can view your image on Docker Hub. For example, here's the [web page](https://hub.docker.com/r/prakhar1989/catnip/) for my image.
+> Замечание. Один важный момент, который стоит прояснить перед тем, как продолжить — **не обязательно** хранить образ в публичном реестре (или в любом другом реестре вообще), чтобы разворачивать на AWS. Если вы пишете код для следующего многомиллионного стартапа-единорога, то можно пропустить этот шаг. Мы публикуем свой образ, чтобы упростить развёртывание, пропустив несколько конфигурационных шагов.
 
-> Note: One thing that I'd like to clarify before we go ahead is that it is not **imperative** to host your image on a public registry (or any registry) in order to deploy to AWS. In case you're writing code for the next million-dollar unicorn startup you can totally skip this step. The reason why we're pushing our images publicly is that it makes deployment super simple by skipping a few intermediate configuration steps.
+Теперь наш образ онлайн, и любой докер-клиент может поиграться с ним с помощью простой команды:
 
-Now that your image is online, anyone who has docker installed can play with your app by typing just a single command.
 ```
 $ docker run -p 8888:5000 prakhar1989/catnip
 ```
-If you've pulled your hair in setting up local dev environments / sharing application configuration in the past, you very well know how awesome this sounds. That's why Docker is so cool!
+
+Если в прошлом вы мучались с установкой локального рабочего окружения и попытками поделиться своей конфигурацией с коллегами, то понимаете, как круто это звучит. Вот почему Docker — это сила!
 
 
 ##### Beanstalk
-AWS Elastic Beanstalk (EB) is a PaaS (Platform as a Service) offered by AWS. If you've used Heroku, Google App Engine etc. you'll feel right at home. As a developer, you just tell EB how to run your app and it takes care of the rest - including scaling, monitoring and even updates. In April 2014, EB added support for running single-container Docker deployments which is what we'll use to deploy our app. Although EB has a very intuitive [CLI](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html), it does require some setup, and to keep things simple we'll use the web UI to launch our application.
 
-To follow along, you need a functioning [AWS](http://aws.amazon.com) account. If you haven't already, please go ahead and do that now - you will need to enter your credit card information. But don't worry, it's free and anything we do in this tutorial will also be free! Let's get started.
+AWS Elastic Beanstalk (EB) это PaaS (Platform as a Service — платформа как сервис) от Amazon Web Services. Если вы использовали Heroku, Google App Engine и т.д., то все будет привычно. Как разработчик, вы сообщаете EB как запускать ваше приложение, а EB занимается всем остальным, в том числе масштабированием, мониторингом и даже обновлениями. В апреле 2014 в EB добавили возможность запускать Docker контейнеры, и мы будем использовать именно эту возможность для деплоя. У EB очень понятный [интерфейс командной строки](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html), но он требует небольшой конфигурации, поэтому для простоты давайте используем веб-интерфейс для запуска нашего приложения.
 
-Here are the steps:
+Чтобы продолжать, вам потребуется работающий аккаунт на [AWS](http://aws.amazon.com). Если у вас его нет, то создайте его. Для этого потребуется ввести данные кредитной карты. Но не волнуйтесь, эта услуга бесплатна, и все, что будет происходить в рамках этого пособия тоже бесплатно.
 
-- Login to your AWS [console](http://console.aws.amazon.com).
-- Click on Elastic Beanstalk. It will be in the compute section on the top left. Alternatively, just click [here](https://console.aws.amazon.com/elasticbeanstalk) to access the EB console.
+Давайте начнем:
 
-<img src="images/eb-start.png" title="static">
+- Войдите в свою [консоль](http://console.aws.amazon.com) AWS.
+- Нажмите на Elastic Beanstalk. Ссылка находится в секции compute, в левом верхнем углу. Или просто перейдите [сюда](https://console.aws.amazon.com/elasticbeanstalk).
 
-- Click on "Create New Application" in the top right
-- Give your app a memorable (but unique) name and provide an (optional) description
-- In the **New Environment** screen, choose the **Web Server Environment**.
-- The following screen is shown below. Choose *Docker* from the predefined configuration. You can leave the *Environment type* as it is. Click Next.
+<img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/eb-start.png" title="static">
 
-<img src="images/eb-docker.png" title="static">
+- Нажмите на "Create New Application" в верхнем правом углу.
+- Дайте своему приложению запоминающееся (но уникальное) имя и, если хотите, добавьте описание.
+на экране **New Environment** выберите **Web Server Environment**.
+- Следующий экран показан ниже. Выберите Docker из готовых вариантов конфигурации. Можно оставить *Environment type* как есть. Нажмите Next.
 
-- This is where we need to tell EB about our image. Open the `Dockerrun.aws.json` [file](https://github.com/prakhar1989/docker-curriculum/blob/master/flask-app/Dockerrun.aws.json) located in the `flask-app` folder and edit the `Name` of the image to your image's name. Don't worry, I'll explain the contents of the file shortly. When you are done, click on the radio button for "upload your own" and choose this file.
-- Next up, choose an environment name and a URL. This URL is what you'll share with your friends so make sure it's easy to remember.
-- For now, we won't be making changes in the *Additional Resources* section. Click Next and move to *Configuration Details*.
-- In this section, all you need to do is to check that the instance type is `t1.micro`. This is very important as this is the **free** instance by AWS. You can optionally choose a key-pair to login. If you don't know what that means, feel free to ignore this for now. We'll leave everything else to the default and forge ahead.
-- We also don't need to provide any *Environment Tags* and *Permissions*, so without batting an eyelid, you can click Next twice in succession. At the end, the screen shows us the *Review* page. If everything looks good, go ahead and press the **Launch** button.
-- The final screen that you see will have a few spinners indicating that your environment is being set up. It typically takes around 5 minutes for the first-time setup.
 
-While we wait, let's quickly see what the `Dockerrun.aws.json` file contains. This file is basically an AWS specific file that tells EB details about our application and docker configuration.
+<img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/eb-docker.png" title="static">
+
+- Тут мы будем сообщать системе EB о нашем образе. Откройте файл `Dockerrun.aws.json` в директории flask-app и измените Name образа, чтобы оно соответствовало названию вашего образа. Не волнуйтесь, я опишу содержание файла попозже. Потом выберите вариант "upload your own" и выберите файл.
+- Далее, выберите название окружения и URL. Этот URL как раз можно будет давать друзьям, так что постарайтесь придумать что-нибудь попроще.
+- Пока не будем вносить никаких правок в секцию Additional Resources. Нажмите Next и переходите к Configuration Details.
+- В этой секции вам нужно выбрать тип инстанса t1.micro. Это очень важно, потому что это бесплатный тип от AWS. Если хотите, можно выбрать пару ключей для входа. Если вы не знаете, что это значит, то не волнуйтесь и просто пропустите эту часть. Все остальное можно оставить по умолчанию и продолжать.
+- Также не нужно указывать никакие Environment Tags and Permissions, так что просто жмите Next два раза подряд. В конце будет экран Review. Если все выглядит нормально, то нажимайте кнопку Launch.
+- На последнем экране будет несколько спиннеров. Это поднимается и настраивается ваше окружение. Обычно, нужно около пяти минут для первой настройки.
+
+Пока ждем, давайте быстренько взглянем на файл `Dockerrun.aws.json`. Это файл для AWS, в котором находится информация о приложении конфигурации Докера. EB получает информацию из этого файла.
 
 ```
 {
@@ -432,17 +471,19 @@ While we wait, let's quickly see what the `Dockerrun.aws.json` file contains. Th
   "Logging": "/var/log/nginx"
 }
 ```
-The file should be pretty self-explanatory, but you can always [reference](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_image.html#create_deploy_docker_image_dockerrun) the official documentation for more information. We provide the name of the image that EB should use along with a port that the container should open.
 
-Hopefully by now, our instance should be ready. Head over to the EB page and you should a green tick indicating that your app is alive and kicking.
+Файл довольно понятный, но всегда можно обратиться к [официальной документации](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_image. Мы указываем название образа, и EB будет использовать его заодно с портом.
 
-<img src="images/eb-deploy.png" title="static">
+К этому моменту инстанс уже должен быть готов. Зайдите на страницу EB и увидите зеленый индикатор успешного запуска приложения.
 
-Go ahead and open the URL in your browser and you should see the application in all its glory. Feel free to email / IM / snapchat this link to your friends and family so that they can enjoy a few cat gifs, too.
+<img src="https://raw.githubusercontent.com/prakhar1989/docker-curriculum/master/images/eb-deploy.png" title="static">
 
-Congratulations! You have deployed your first Docker application! That might seem like a lot of steps, but with the command-line tool for EB you can almost mimic the functionality of Heroku in a few keystrokes! Hopefully you agree that Docker takes away a lot of the pains of building and deploying applications in the cloud. I would encourage you to read the AWS [documentation](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker-singlecontainer-deploy.html) on single-container Docker environments to get an idea of what features exist.
+Зайдите на указанный URL в браузере и увидите приложение во все красе. Пошлите адрес своим друзьям, чтобы все могли насладиться гифками с кошками.
 
-In the next (and final) part of the tutorial, we'll up the ante a bit and deploy an application that mimics the real-world more closely; an app with a persistent back-end storage tier. Let's get straight to it!
+Поздравляю! Вы задеплоили свое первое Докер-приложение! Может показаться, что было очень много шагов, но с командной утилитой EB можно имитировать функциональность Хероку несколькими нажатиями клавиш. Надеюсь, вы согласитесь, что Докер сильно упрощает процесс и минимизирует болезненные моменты деплоя в облако. Я советую вам почитать [документацию](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker-singlecontainer-deploy.html) AWS про single-container Docker environment чтобы понимать, какие существуют возможности в EB.
+
+В следующей, последней части пособия, мы пойдем немного дальше и развернём приложение, приближенное к реальному миру. В нем будет постоянное бэкэнд-хранилище. Поехали!
+
 
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 <a id="multi-container"></a>

@@ -28,7 +28,7 @@
 
 Взлёт Docker был по-настоящему молниеносным. Несмотря на то, что контейнеры сами по себе не новая технология, до Docker они не были так распространены и популярны. Docker изменил ситуацию, предоставив стандартный API, который существенно упростил создание и использование контейнеров, и позволил сообществу вместе разрабатывать библиотеки по работе с контейнерами. В статье, опубликованной в [The Register](http://www.theregister.co.uk/2014/05/23/google_containerization_two_billion/) в середине 2014 говорится, что Google более **двух миллиардов контейнеров в неделю**.
 
-<p align="center"
+<p align="center">
     <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/interest.png" 
     alt="docker logo">
     

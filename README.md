@@ -32,7 +32,7 @@
     <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/interest.png" 
     alt="docker logo">
     
-    График интереса к Docker за последние 5 лет по данным [Google Trends](https://trends.google.com/trends/explore?q=Docker).
+    График интереса к Docker за последние 5 лет
 </p>
 
 В дополнение к стабильному росту популярности, компания-разработчик Docker Inc. была оценена в два с лишним миллиарда долларов! Благодаря преимуществам в эффективности и портативности, Docker начал получать всё большую поддержку, и сейчас стоит во главе движения по контейнеризации (containerization). Как современные разработчики, мы должны понять этот тренд и выяснить, какую пользу мы можем из него извлечь.

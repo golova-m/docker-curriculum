@@ -30,8 +30,7 @@
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/interest.png" 
-    alt="docker logo">
-    
+    alt="docker logo">    
     График интереса к Docker за последние 5 лет
 </p>
 

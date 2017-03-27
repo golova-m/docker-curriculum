@@ -3,7 +3,7 @@
 
 *Научитесь легко создавать и разворачивать распределённые приложения в облаке с помощью Docker.*
 
-*По мотивам статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
+*На основе статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
 
 <a href="#top" class="top" id="getting-started">Top</a>
 

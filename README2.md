@@ -13,13 +13,13 @@
 ## Оглавление
 
     - [3 Многоконтейнерные окружения](#multi-container)
-         - [3.1 Приложение для поиска фургонов c едой в Сан-Франциско (SF Food Trucks)](#foodtrucks)
-         - [3.2 Сетевая инфраструктура Docker](#docker-network)
-         - [3.3 Docker Compose](#docker-compose)
-         - [3.4 AWS Elastic Container Service](#aws-ecs)
+        - [3.1 Приложение для поиска фургонов c едой в Сан-Франциско (SF Food Trucks)](#foodtrucks)
+        - [3.2 Сетевая инфраструктура Docker](#docker-network)
+        - [3.3 Docker Compose](#docker-compose)
+        - [3.4 AWS Elastic Container Service](#aws-ecs)
     - [4 Заключение](#wrap-up)
-         - [4.1 Что дальше?](#next-steps)
-         - [4.2 Обратная связь](#feedback)
+        - [4.1 Что дальше?](#next-steps)
+        - [4.2 Обратная связь](#feedback)
     - [Источники](#references)
 
 ------------------------------

@@ -160,8 +160,6 @@ c31bf3beb299        elasticsearch       "/docker-entrypoin..."   2 hours ago    
 
 Итак, у нас есть контейнер ES по адресу и порту `0.0.0.0:9200`, и мы можем напрямую обращаться к нему. Если можно было бы сообщить нашему приложению подключаться к этому адресу, то оно сможет общаться с ES, верно? Давайте взглянем на [код на Питоне](https://github.com/prakhar1989/FoodTrucks/blob/master/flask-app/app.py#L7), туда, где описано подключение.
 
-So we have one ES container running on `0.0.0.0:9200` port which we can directly access. If we can tell our Flask app to connect to this URL, it should be able to connect and talk to ES, right? Let's dig into our [Python code](https://github.com/prakhar1989/FoodTrucks/blob/master/flask-app/app.py#L7) and see how the connection details are defined.
-
 ```
 es = Elasticsearch(host='es')
 ```
@@ -425,8 +423,6 @@ $ ./setup-docker.sh
 
 Давайте посмотрим, сможем ли мы создать файл `docker-compose.yml` для нашего приложения SF-Foodtrucks и проверим, способен ли он на то, что обещает.
 
-The first step, however, is to install Docker Compose. If you're running Windows or Mac, Docker Compose is already installed as it comes in the Docker Toolbox. Linux users can easily get their hands on Docker Compose by following the [instructions](https://docs.docker.com/compose/install/) on the docs. Since Compose is written in Python, you can also simply do `pip install docker-compose`. Test your installation with -
-
 Однако вначале нужно установить Docker Compose. Есть у вас Windows или Mac, то Docker Compose уже установлен — он идет в комплекте с Docker Toolbox. На Linux можно установить Docker Compose следуя простым [инструкциям](https://docs.docker.com/compose/install/) на сайте документации. Compose написан на Python, поэтому можно сделать просто `pip install docker-compose`. Проверить работоспособность так:
 
 ```
@@ -667,8 +663,6 @@ web:
   links:
     - es
 ```
-
-The only changes we made from the original `docker-compose.yml` are of providing the `mem_limit` and `cpu_shares` values for each container. We also got rid of the `version` and the `services` key, since AWS doesn't yet support [version 2](https://docs.docker.com/compose/compose-file/#version-2) of Compose file format. Since our apps will run on `t2.micro` instances, we allocate 250mb of memory. Another thing we need to do before we move onto the next step is to publish our image on Docker Hub. As of this writing, ecs-cli **does not** support the `build` command - which is [supported](https://docs.docker.com/compose/compose-file/#build) perfectly by Docker Compose.
 
 Единственные отличия от оригинального файла `docker-compose.yml` это параметры `mem_limit` и `cpu_shares` для каждого контейнера.
 

@@ -34,7 +34,7 @@
 
 Если у вас был опыт управления сервисами в эксплуатируемом конечными пользователями приложении, то вы знаете, что современные приложения не такие простые. Как правило всегда используется база данных или другой тип постоянного хранилища. Системы [Redis](http://redis.io/) и [Memcached](http://memcached.org/) стали практически обязательной частью архитектуры веб-приложения. Поэтому, в этом разделе мы научимся "докеризировать" приложения, которым требуется несколько запущенных сервисов.
 
-В частности, вы увидим, как запускать и управлять **многоконтейнерными** Docker-окружениями. Почему нужно несколько контейнеров, спросите вы? Ну, одна из главных идей Docker в том, что он предоставляет изоляцию. Идея совмещения процесса и его зависимостей в одной песочнице (называемой контейнером) и делает Docker мощным инструментом.
+В частности, мы увидим, как запускать и управлять **многоконтейнерными** Docker-окружениями. Почему нужно несколько контейнеров, спросите вы? Ну, одна из главных идей Docker в том, что он предоставляет изоляцию. Идея совмещения процесса и его зависимостей в одной песочнице (называемой контейнером) и делает Docker мощным инструментом.
 
 Когда монолитное приложение становится слишком сложным для поддержки в распределённой среде мудрым решением является произвести его декомпозицию на компоненты-сервисы. Хорошей идеей является содержание **сервисов** в отдельных контейнерах. Разным компонентам скорее всего потребуются разные ресурсы, и необходимость в новых ресурсах может возникать в разной степени. Помещая компоненты в отдельные контейнеры, мы можем выделять наиболее подходящий тип ресурсов для каждой части приложения. Это также созвучно со всем [микросервисным](http://martinfowler.com/articles/microservices.html) движением. Это одна из причин, по которой Docker (и любая другая технология контейнеризации) находится на [передовой](https://medium.com/aws-activate-startup-blog/using-containers-to-build-a-microservices-architecture-6e1b8bacb7d1#.xl3wryr5z) современных микросервисных архитектур. 
 
@@ -63,8 +63,6 @@ nshou/elasticsearch-kibana        Elasticsearch-5.2.2 Kibana-5.2.2              
 barnybug/elasticsearch            Latest Elasticsearch 1.7.2 and previous re...   15                   [OK]
 digitalwonderland/elasticsearch   Latest Elasticsearch with Marvel & Kibana       14                   [OK]
 ```
-
-Quite unsurprisingly, there exists an officially supported [image](https://hub.docker.com/_/elasticsearch/) for Elasticsearch. To get ES running, we can simply use `docker run` and have a single-node ES container running locally within no time.
 
 Не удивительно, но существует официальный [образ](https://hub.docker.com/_/elasticsearch/) для Elasticsearch. Чтобы запустит ES, нужно всего лишь выполнить `docker run`, и вскоре у нас будет локальный, работающий контейнер с одним узлом ES.
 
@@ -753,12 +751,6 @@ ___________
 <a id="feedback"></a>
 
 ### 4.2 Обратная связь
-
-Now that the tutorial is over, it's my turn to ask questions. How did you like the tutorial? Did you find the tutorial to be a complete mess or did you have fun and learn something?
-
-Send in your thoughts directly to [me](mailto:prakhar@prakhar.me) or just [create an issue](https://github.com/prakhar1989/docker-curriculum/issues/new). I'm on [Twitter](https://twitter.com/prakharsriv9), too, so if that's your deal, feel free to holler there!
-
-I would totally love to hear about your experience with this tutorial. Give suggestions on how to make this better or let me know about my mistakes. I want this tutorial to be one of the best introductory tutorials on the web and I can't do it without your help.
 
 Теперь моя очередь задавать вопросы. Вам понравилось пособие? Оно показалось вам запутанным, или вам удалось научиться чему-то?
 

@@ -606,33 +606,36 @@ rtt min/avg/max/mdev = 0.049/0.056/0.064/0.010 ms
 
 Если вы дочитали до этого места, то скорее всего убедились, что Docker — довольно полезная технология. И вы не одиноки. Облачные провайдеры заметили взрывной рост популярности Докера и стали добавлять поддержку в свои сервисы. Сегодня, Docker-приложения можно разворачивать на AWS,  [Azure](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-docker-vm-extension/), [Rackspace](http://blog.rackspace.com/docker-with-the-rackspace-open-cloud/), [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-docker-application) и много других. Мы уже умеем разворачивать приложение с одним контейнером на Elastic Beanstalk, а в этом разделе мы изучим [Elastic Container Service (or ECS)](https://aws.amazon.com/ecs/).
 
-AWS ECS — это масштабируемый и гибкий сервис по управлению контейнерами, и он поддерживает Docker. С его помощью можно управлять кластером на EC2 через простой API. В Beanstalk настройки по умолчанию адекватны для большого количества задач, но ECS позволяет настроить каждый аспект окружения по вашим потребностям. По этой причине ECS — не самый лучший выбор для начало обучения.
+AWS ECS — это масштабируемый и гибкий сервис по управлению контейнерами, и он поддерживает Docker. С его помощью можно управлять кластером на EC2 через простой API. В Beanstalk настройки по умолчанию адекватны для базовых задач, но ECS позволяет настроить каждый аспект окружения по вашим потребностям. По этой причине ECS — не самый лучший выбор для начало обучения.
 
-К счастью, у ECS есть удобный инструмент командной строки ([CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI.html)) с поддержкой Docker Compose и автоматической провизией на ECS! Так как у нас уже есть рабочий файл `docker-compose.yml`, настройка и запуск на AWS должна быть достаточно легкой. Начнем!
+К счастью, у ECS есть удобный инструмент командной строки ([CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI.html)) с поддержкой Docker Compose и автоматическим выделением ресурсов (provision) на ECS! Так как у нас уже есть рабочий файл `docker-compose.yml`, настройка и запуск на AWS должна быть достаточно лёгкой. Начнём!
 
-The first step is to install the CLI. As of this writing, the CLI is not supported on Windows. Instructions to install the CLI on both Mac and Linux are explained very clearly in the [official docs](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html). Go ahead, install the CLI and when you are done, verify the install by running
-
-В начале нужно установить CLI. На момент написания этого пособия CLI-утилита не доступна на Windows. Инструкции по установке CLI на Mac и Linux хорошо описаны на сайте с [официальной документацией](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html). Установите утилиту, а потом проверьте её работоспособность.
+В начале нужно установить CLI. На момент написания этого пособия CLI-утилита не доступна в Windows. Инструкции по установке CLI на Mac и Linux хорошо описаны на сайте с [официальной документацией](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html). Установите утилиту, а потом проверьте её работоспособность.
 
 
 ```
-$ ecs-cli --version
-ecs-cli version 0.1.0 (*cbdc2d5)
+docker@boot2docker:~$ ecs-cli --version
+ecs-cli version 0.5.0 (1aa8028)
 ```
-Следующий шаг — задание пары ключей для авторизации на инстансах. Зайдите на страницу EC2 Console и создайте новый keypair. Скачайте файл и держите его в безопасном месте. Еще один момент — имя региона. В примере ниже ключ назван именем `ecs` и регион `us-east-1`.  В последующем повествовании это будет подразумеваться.
+
+Следующий шаг — задание пары ключей для авторизации на инстансах. Зайдите на страницу EC2 Console и создайте новую пару ключей (keypair). Скачайте файл и держите его в безопасном месте. Ещё один момент — имя региона. В примере ниже ключ назван именем `ecs` и регион `us-east-1`. В последующем повествовании это будет подразумеваться.
+
+Дата-центры Amazon EC2 расположены в разных точках мира и состоят из *регионов* и *зон доступности*. Каждый регион представляет из себя отдельную географичесую область и состоит из множества непересекающихся зон доступности. О том, из каких регионов вы можете выбрать вы можете прочитать на странице [Regions and Availability Zones](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html).
 
 <img src="images/keypair.png" alt="keypair.png" />
 
-Теперь настройте CLI.
+Теперь [настройте CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html). В IAM консоли создайте пользователя во вкладке `Users` если он ещё не создан. Для данного пользователя сгенерируйте пару ключей доступа (Access key) во вкладке `Security credentials`. 
+
+> Примечание. Секретный ключ можно сохранить только при создании пары. После закрытия окна он будет не доступен.
 
 ```
-$ ecs-cli configure --region us-east-1 --cluster foodtrucks
+$ ecs-cli configure --access-key <Access key ID> --secret-key <Secret access key> --region us-east-1 --cluster foodtrucks
 INFO[0000] Saved ECS CLI configuration for cluster (foodtrucks)
 ```
 
 Команда `configure` с именем региона, в котором хотим разместить наш кластер, и названием кластера. Нужно указать тот же регион, что использовался при создании ключей. Если у вас не настроен [AWS CLI](https://aws.amazon.com/cli/), то следуйте [руководству](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html), которое подробно описывает все шаги.
 
-Следующий шаг позволяет утилите создавать шаблон [CloudFormation](https://aws.amazon.com/cloudformation/).
+Следующий шаг позволяет утилите создавать шаблон [CloudFormation](https://aws.amazon.com/cloudformation/). 
 
 ```
 $ ecs-cli up --keypair ecs --capability-iam --size 2 --instance-type t2.micro
@@ -645,17 +648,108 @@ INFO[0182] Cloudformation stack status                   stackStatus=CREATE_IN_P
 INFO[0242] Cloudformation stack status                   stackStatus=CREATE_IN_PROGRESS
 ```
 
-Здесь мы указываем названия ключей, которые мы скачали (в моем случае `ecs`), количество инстансов (`--size`) и тип инстансов, на которых хотим запускать контейнеры. Флаг `--capability-iam` говорит утилите, что мы понимаем, что эта команда может создать ресурсы IAM.
+Здесь мы указываем названия ключей, которые скачали (в моём случае `ecs`), количество инстансов (`--size`) и тип инстансов, на которых хотим запускать контейнеры. Флаг `--capability-iam` говорит утилите, что мы понимаем, что эта команда может создать ресурсы IAM.
 
-В последнем шаге мы используем файл `docker-compose.yml`. Требуется небольшое изменение, так что вместо модификации файла, давайте сделаем копию и назовем ее `aws-compose.yml`. Содержание этого [файла](https://github.com/prakhar1989/FoodTrucks/blob/master/aws-compose.yml) (после изменений):
+> Если вы натыкаетесь на ошибку `InvalidSignatureException: Signature not yet current: 20170523T142753Z is still later than 20170523T093150Z (20170523T092650Z + 5 min.)` вам потребуется скорректировать системное время так, чтобы оно не отличалось от времени дата-центра региона больше, чем на 5 минут. Изменить время можно с помощью команды date -s 12:00:00.
+
+
+Теперь у вашего пользователя не достаточно прав для операций EC2 машинами. В IAM сервисе потребуется назначить для него права. Вы можете дать только необходимые права в соответствии с запрашиваемыми действиями или предоставить полный администраторский доступ Amazon EC2 по заранее подготовленному [шаблону](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/IAMPolicyExamples.html#first-run-permissions). Права добавляются в IAM консоли для пользователя во вкладке `Add permissions`. Пример конфигурации прав доступа (AmazonEC2ContainerServiceFullAccess):
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:CreateAutoScalingGroup",
+                "autoscaling:CreateLaunchConfiguration",
+                "autoscaling:CreateOrUpdateTags",
+                "autoscaling:DeleteAutoScalingGroup",
+                "autoscaling:DeleteLaunchConfiguration",
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeAutoScalingNotificationTypes",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeScalingActivities",
+                "autoscaling:DescribeTags",
+                "autoscaling:DescribeTriggers",
+                "autoscaling:UpdateAutoScalingGroup",
+                "cloudformation:CreateStack",
+                "cloudformation:DescribeStack*",
+                "cloudformation:DeleteStack",
+                "cloudformation:UpdateStack",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetrics",
+                "ec2:AssociateRouteTable",
+                "ec2:AttachInternetGateway",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:CreateInternetGateway",
+                "ec2:CreateKeyPair",
+                "ec2:CreateNetworkInterface",
+                "ec2:CreateRoute",
+                "ec2:CreateRouteTable",
+                "ec2:CreateSecurityGroup",
+                "ec2:CreateSubnet",
+                "ec2:CreateTags",
+                "ec2:CreateVpc",
+                "ec2:DeleteInternetGateway",
+                "ec2:DeleteRoute",
+                "ec2:DeleteRouteTable",
+                "ec2:DeleteSecurityGroup",
+                "ec2:DeleteSubnet",
+                "ec2:DeleteTags",
+                "ec2:DeleteVpc",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeNetworkInterface",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeTags",
+                "ec2:DescribeVpcAttribute",
+                "ec2:DescribeVpcs",
+                "ec2:DetachInternetGateway",
+                "ec2:DisassociateRouteTable",
+                "ec2:ModifyVpcAttribute",
+                "ec2:RunInstances",
+                "ec2:TerminateInstances",
+                "ecr:*",
+                "ecs:*",
+                "elasticloadbalancing:*",
+                "iam:AttachRolePolicy",
+                "iam:CreateRole",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListInstanceProfiles",
+                "iam:ListRoles",
+                "iam:ListGroups",
+                "iam:ListUsers",
+                "iam:CreateInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:ListInstanceProfilesForRole",
+                "iam:PassRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+В последнем шаге мы используем файл `docker-compose.yml`. Требуется небольшое изменение, так что вместо модификации файла, давайте сделаем копию и назовем её `aws-compose.yml`. Содержание этого [файла](https://github.com/prakhar1989/FoodTrucks/blob/master/aws-compose.yml) (после изменений):
 
 ```
 es:
-  image: elasticsearch
+  image: elasticsearch:2.3
   cpu_shares: 100
   mem_limit: 262144000
 web:
-  image: prakhar1989/foodtrucks-web
+  image: <имя пользователя Docker>/<имя образа>
   cpu_shares: 100
   mem_limit: 262144000
   ports:
@@ -666,11 +760,11 @@ web:
 
 Единственные отличия от оригинального файла `docker-compose.yml` это параметры `mem_limit` и `cpu_shares` для каждого контейнера.
 
-Также, мы убрали `version` и `services`, так как AWS еще не поддерживает [версию 2](https://docs.docker.com/compose/compose-file/#version-2) файлового формата Compose. Так как наше приложение будет работать на инстансах типа `t2.micro`, мы задали 250 мегабайт памяти. Теперь нам нужно опубликовать образ на Docker Hub. На момент написания этого пособия, ecs-cli **не поддерживает** команду build. Но Docker Compose [поддерживает](https://docs.docker.com/compose/compose-file/#build) ее без проблем.
+Также, мы убрали `version` и `services`, так как AWS ещё не поддерживает [версию 2](https://docs.docker.com/compose/compose-file/#version-2) формата файла Compose. Исходя из того, что наше приложение будет работать на инстансах типа `t2.micro`, мы задали 250 мегабайт памяти. Теперь нам нужно опубликовать образ на Docker Hub. На момент написания этого пособия, ecs-cli **не поддерживает** команду build. Но Docker Compose [поддерживает](https://docs.docker.com/compose/compose-file/#build) её без проблем.
 
 
 ```
-$ docker push prakhar1989/foodtrucks-web
+$ docker push <имя пользователя Docker>/<имя образа>
 ```
 
 Красота! Давайте запустим финальную команду и развернём приложение на ECS!
@@ -689,7 +783,7 @@ INFO[0060] Started container...                          container=845e2368-170d
 INFO[0060] Started container...                          container=845e2368-170d-44a7-bf9f-84c7fcd9ae29/es desiredStatus=RUNNING lastStatus=RUNNING taskDefinition=ecscompose-foodtrucks:2
 ```
 
-То, что вывод похож на вывод **Docker Compose** — не совпадение. Аргумент `--file` используется для переопределения файла по умолчанию (`docker-compose.yml`). Если все прошло хорошо, то вы увидите строку `desiredStatus=RUNNING lastStatus=RUNNING` в самом конце.
+То, что вывод похож на вывод **Docker Compose** — не совпадение. Аргумент `--file` используется для переопределения файла по умолчанию (`docker-compose.yml`). Если всё прошло хорошо, то вы увидите строку `desiredStatus=RUNNING lastStatus=RUNNING` в самом конце.
 
 Круто! Теперь приложение запущено. Как к нему обратиться?
 
@@ -707,7 +801,7 @@ Name                                      State    Ports                     Tas
 <img src="images/tasks.png" alt="ECS cluster" />
 
 
-Видно, что был создан ECS-кластер 'foodtrucks', и в нем выполняется одна задача с двумя инстансами. Советую поковыряться в этой консоли и изучить разные ее части и опции.
+Видно, что был создан ECS-кластер 'foodtrucks', и в нем выполняется одна задача с двумя инстансами. Советую поковыряться в этой консоли и изучить разные её части и опции.
 
 Вот и все. Всего несколько команд — и приложение работает на AWS!
 

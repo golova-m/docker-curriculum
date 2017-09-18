@@ -1,10 +1,8 @@
 <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/logo.png" alt="docker logo">
 
-*На основе статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
-
 # Часть 2
 
-<a href="#top" class="top" id="table-of-contents">Top</a>
+<a id="table-of-contents"></a>
 ## Оглавление
 
 - [3 Многоконтейнерные окружения](#multi-container)
@@ -20,9 +18,7 @@
 
 ------------------------------
 
-<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="multi-container"></a>
-
 ## 3 Многоконтейнерные окружения
 
 В прошлый раз мы увидели, как легко и просто запускать приложения с помощью Docker. Мы начали с простого статического сайта, а потом запустили Flask-приложение. Оба варианта можно было запускать локально или в облаке, несколькими командами. И то, и другое приложения работали в **одном контейнере**.

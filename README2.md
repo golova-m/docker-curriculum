@@ -1,9 +1,6 @@
-<a id="top"></a>
 <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/logo.png" alt="docker logo">
 
 *На основе статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
-
-<a href="#top" class="top" id="getting-started">Top</a>
 
 # Часть 2
 
@@ -23,7 +20,7 @@
 
 ------------------------------
 
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="multi-container"></a>
 
 ## 3 Многоконтейнерные окружения
@@ -805,7 +802,7 @@ Name                                      State    Ports                     Tas
 
 ___________
 
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="wrap-up"></a>
 
 ## 4 Заключение
@@ -849,7 +846,7 @@ ___________
 
 ___________
 
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="references"></a>
 
 ## Источники

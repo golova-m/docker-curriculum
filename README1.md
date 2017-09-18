@@ -1,10 +1,6 @@
 <a id="top"></a>
 <img src="https://raw.githubusercontent.com/protsenkovi/docker-curriculum/master/images/logo.png" alt="docker logo">
 
-*На основе статьи https://prakhar.me/docker-curriculum/ и её перевода https://habrahabr.ru/post/310460/.*
-
-<a href="#top" class="top" id="getting-started">Top</a>
-
 ## Базовые термины
 
 ### Что такое Docker?
@@ -42,7 +38,7 @@
 
 Данный документ состоит из нескольких разделов, каждый из которых посвящён определённому аспекту Docker. В каждом разделе мы будем вводить команды или писать код. Весь код доступен в [репозитории GitHub](http://github.com/prakhar1989/docker-curriculum).
 
-<a href="#top" class="top" id="table-of-contents">Top</a>
+<a id="table-of-contents"></a>
 ## Оглавление
 
 -	[Предисловие](#preface)
@@ -60,7 +56,7 @@
 
 
 ------------------------------
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+
 ## Предисловие
 
 > Внимание: Данная лабораторная предполагает использование Docker версии  **1.12.0-rc2**. Если какая-либо часть будет несовместима с более новыми версиями, откройте [issue](https://github.com/prakhar1989/docker-curriculum/issues). Спасибо!
@@ -93,7 +89,7 @@ This message shows that your installation appears to be working correctly.
 ```
 ___________
 
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="busybox"></a>
 ## 1 Играем с BusyBox
 
@@ -202,7 +198,7 @@ $ docker rm $(docker ps -a -q -f status=exited)
 - *Docker Hub* - [Реестр Docker образов](https://hub.docker.com/explore/). Грубо говоря, архив всех доступных образов. Если нужно, то можно содержать собственный реестр и использовать его для получения образов.
 
 
-<a href="#table-of-contents" class="top" id="preface">Top</a>
+<a href="#table-of-contents" class="Top">К оглавлению</a>
 <a id="webapps"></a>
 
 ## 2 Веб-приложения в Docker
@@ -478,3 +474,5 @@ AWS Elastic Beanstalk (EB) это PaaS (Platform as a Service — платфор
 Поздравляю! Вы развернули свое первое Docker приложение! Может показаться, что было очень много шагов, но с командной утилитой EB можно имитировать функциональность Heroku несколькими нажатиями клавиш. Надеюсь, вы согласитесь, что Docker сильно упрощает процесс и минимизирует болезненные моменты развёртывания в облако. 
 
 > Совет. Прочитайте [документацию](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker-singlecontainer-deploy.html) AWS про single-container Docker environment, чтобы понимать, какие существуют возможности в EB.
+
+<a href="#table-of-contents" class="Top">К оглавлению</a>

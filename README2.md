@@ -373,7 +373,7 @@ docker run -d --net foodtrucks -p 9200:9200 -p 9300:9300 --name es elasticsearch
 docker run -d --net foodtrucks -p 5000:5000 --name foodtrucks-web prakhar1989/foodtrucks-web
 ```
 
-Теперь представьте, что хотите поделиться приложением с другом. Или хотите запустить на сервере, где установлен Docker. Можно запустить всю систему с помощью одной команды!
+Теперь представьте, что хотите поделиться приложением с другом. Или хотите запустить его на сервере, где установлен Docker. Можно запустить всю систему с помощью одной команды!
 
 ```
 $ git clone https://github.com/prakhar1989/FoodTrucks
@@ -381,7 +381,7 @@ $ cd FoodTrucks
 $ ./setup-docker.sh
 ```
 
-Вот и все! По-моему, это невероятно крутой и мощный способ распространять и запускать приложения!
+Вот и всё! По-моему, это невероятно крутой и мощный способ распространять и запускать приложения!
 
 <a id="docker-links"></a>
 ##### Docker Links
@@ -425,7 +425,7 @@ OpenSSL version: OpenSSL 1.0.1t  3 May 2016
 
 ```
 
-Теперь можно перейти к следующему шагу, то есть к созданию файла `docker-compose.yml`. Синтаксис `yml`-файлов очень простой, и в репозитории уже есть пример, который мы будем использовать
+Теперь можно перейти к следующему шагу, то есть к созданию файла `docker-compose.yml`. Синтаксис `yml`-файлов очень простой, и в репозитории уже есть пример, который мы будем использовать.
 
 ```
 version: "2"
@@ -597,7 +597,7 @@ rtt min/avg/max/mdev = 0.049/0.056/0.064/0.010 ms
 
 Если вы дочитали до этого места, то скорее всего убедились, что Docker — довольно полезная технология. И вы не одиноки. Облачные провайдеры заметили взрывной рост популярности Докера и стали добавлять поддержку в свои сервисы. Сегодня, Docker-приложения можно разворачивать на AWS,  [Azure](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-docker-vm-extension/), [Rackspace](http://blog.rackspace.com/docker-with-the-rackspace-open-cloud/), [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-docker-application) и много других. Мы уже умеем разворачивать приложение с одним контейнером на Elastic Beanstalk, а в этом разделе мы изучим [Elastic Container Service (or ECS)](https://aws.amazon.com/ecs/).
 
-AWS ECS — это масштабируемый и гибкий сервис по управлению контейнерами, и он поддерживает Docker. С его помощью можно управлять кластером на EC2 через простой API. В Beanstalk настройки по умолчанию адекватны для базовых задач, но ECS позволяет настроить каждый аспект окружения по вашим потребностям. По этой причине ECS — не самый лучший выбор для начало обучения.
+AWS ECS — это масштабируемый и гибкий сервис по управлению контейнерами, и он поддерживает Docker. С его помощью можно управлять кластером на EC2 через простой API. В Beanstalk настройки по умолчанию адекватны для базовых задач, в то время как ECS позволяет настроить каждый аспект окружения по вашим потребностям. По этой причине ECS — не самый лучший выбор для начала обучения.
 
 К счастью, у ECS есть удобный инструмент командной строки ([CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI.html)) с поддержкой Docker Compose и автоматическим выделением ресурсов (provision) на ECS! Так как у нас уже есть рабочий файл `docker-compose.yml`, настройка и запуск на AWS должна быть достаточно лёгкой. Начнём!
 
@@ -620,7 +620,11 @@ ecs-cli version 0.5.0 (1aa8028)
 > Примечание. Секретный ключ можно сохранить только при создании пары. После закрытия окна он будет не доступен.
 
 ```
-$ ecs-cli configure --access-key <Access key ID> --secret-key <Secret access key> --region us-east-1 --cluster foodtrucks
+$ ecs-cli configure profile --access-key <Access key ID> --secret-key <Secret access key>
+```
+
+```
+$ ecs-cli configure --cluster foodtrucks --region us-east-1 
 INFO[0000] Saved ECS CLI configuration for cluster (foodtrucks)
 ```
 

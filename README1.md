@@ -36,7 +36,7 @@
 
 Установка и настройка всех необходимых инструментов может быть утомительной задачей, но, к счастью, Docker стал довольно стабильным, и установка и запуск его на любой ОС стала простым. Итак, установим Docker.
 
-Ещё несколько релизов назад запуск Докера на OS X и Windows был проблемным. Но команда разработчиков проделала огромную работу, и сегодня весь процесс и ежу понятен. На официальном сайте вы можете найти подробные инструкции по установке на [Mac](https://www.docker.com/products/docker#/mac), [Linux](https://www.docker.com/products/docker#/linux) and [Windows](https://www.docker.com/products/docker#/windows).
+Ещё несколько релизов назад запуск Докера на OS X и Windows был проблемным, но команда разработчиков проделала огромную работу. Сегодня весь процесс и ежу понятен. На официальном сайте вы можете найти подробные инструкции по установке на [Mac](https://www.docker.com/products/docker#/mac), [Linux](https://www.docker.com/products/docker#/linux) and [Windows](https://www.docker.com/products/docker#/windows).
 
 Вы можете также создать виртуальную машину VMWare или VirtualBox на основе образа [`boot2docker.iso`](https://github.com/boot2docker/boot2docker/releases). Для подключения к виртуальной машине по ssh узнайте ip машины командой `ip addr` и залогиньтесь в неё под именем `docker` c паролем `tcuser`.
 
